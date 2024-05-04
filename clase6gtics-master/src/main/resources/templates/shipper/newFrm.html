@@ -6,21 +6,22 @@
             <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Shipper')}"></nav>
             <div class="row mb-4">
                 <div class="col-md-6 offset-md-3">
-                    <h2>Nuevo Transportista</h2>
+                    <h2 th:text="${edicion?'Editar transportista':'Nuevo Transportista'}">Nuevo Transportista</h2>
                     <div th:if="${errorCompany != null}" th:text="${errorCompany}" class="alert alert-danger"
                          role="alert"></div>
                     <hr/>
-                    <form method="post" th:action="@{'/shipper/save'}">
+                    <form method="post" th:object="${shipper}" th:action="@{'/shipper/save'}">
+                        <input type="hidden" th:field="*{shipperId}">
                         <div class="mb-3">
                             <label for="companyName" class="form-label">Nombre de la compañía</label>
-                            <input name="companyName" type="text" class="form-control" id="companyName">
+                            <input type="text" th:field="*{companyName}" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Teléfono</label>
-                            <input name="phone" type="text" class="form-control" id="phone">
+                            <input type="text" class="form-control" th:field="*{phone}">
                         </div>
                         <a th:href="@{'/shipper/list'}" class="btn btn-danger">Cancelar</a>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button th:text="${edicion?'Editar':'Registrar'}" type="submit" class="btn btn-primary">Registrar</button>
                     </form>
                 </div>
             </div>
